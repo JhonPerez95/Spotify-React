@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './style/App.css';
 import Spotify from 'spotify-web-api-js';
+import { Grid } from '@material-ui/core';
 
+import CardPlayList from './components/cardPlayList/container';
+import getHashParams from './service/accesToken';
 var spotifyWeb = new Spotify();
 
 function App() {
@@ -15,22 +18,13 @@ function App() {
 
   // GET ACCESS_TOKEM
   const params = getHashParams();
-  function getHashParams() {
-    var hashParams = {};
-    var e,
-      r = /([^&;=]+)=?([^&;]*)/g,
-      q = window.location.hash.substring(1);
-    while ((e = r.exec(q))) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-    return hashParams;
+  if (params.access_token) {
+    spotifyWeb.setAccessToken(params.access_token);
   }
 
   // OBTENIENDO ULTIMA CANCION
   const getNowPlaying = () => {
     spotifyWeb.getMyCurrentPlaybackState().then((res) => {
-      // console.log(res.item.album.images[0].url);
-
       setNowPlaying((nowPlaying) => ({
         ...nowPlaying,
         name: res.item.name,
@@ -43,14 +37,11 @@ function App() {
   const getAllPlayList = () => {
     spotifyWeb.getUserPlaylists().then((res) => {
       SetPlayList(res.items);
-
-      // console.log(playList[0]);
     });
   };
 
   useEffect(() => {
     getAllPlayList();
-    //
   }, []);
 
   // OBTENIENDO TODAS LAS CANCIONES DE UNA PLAYLIST
@@ -60,7 +51,7 @@ function App() {
   //   });
   // };
 
-  console.log(playList[0].images);
+  console.log(playList);
   return (
     <div className="App">
       <header className="App-header">
@@ -72,20 +63,17 @@ function App() {
           <img src={nowPlaying.image} style={{ width: 500 }} />
         </div>
         <button onClick={() => getNowPlaying()}>Check Now Playing</button>
-        {/* <div>
-          <button onClick={() => getAllPlayList()}> Play List Saved</button>
-        </div> */}
-        {/* {playList.map((item, i) => (
-          <div className="card">
-            <img src={item[i].images[0].url} style={{ width: 250 }} />
-            <div className="container">
-              <h4>
-                <b> {item[i].name}</b>
-              </h4>
-              <p> Total Track's: {item[i].tracks.total} </p>
-            </div>
-          </div>
-        ))} */}
+
+        {/* <Grid container justify="center">
+          {playList.map((item, i) => (
+            <CardPlayList
+              image={item[i].images[0].url}
+              name={item[i].name}
+              total={item[i].tracks.total}
+              key={i}
+            />
+          ))}
+        </Grid> */}
       </header>
     </div>
   );
