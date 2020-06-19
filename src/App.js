@@ -46,12 +46,13 @@ function App() {
 
   // OBTENIENDO TODAS LAS CANCIONES DE UNA PLAYLIST
   // const getPlayListTracks = () => {
-  //   spotifyWeb.getPlaylistTracks().then((res) => {
+  //   spotifyWeb.getPlaylistTracks('5hFtEj9nCPao6UAV1xqn5n').then((res) => {
   //     console.log(res);
   //   });
   // };
 
-  console.log(playList);
+  // getPlayListTracks();
+
   return (
     <div className="App">
       <header className="App-header">
@@ -64,16 +65,16 @@ function App() {
         </div>
         <button onClick={() => getNowPlaying()}>Check Now Playing</button>
 
-        {/* <Grid container justify="center">
+        <Grid container justify="center">
           {playList.map((item, i) => (
             <CardPlayList
-              image={item[i].images[0].url}
-              name={item[i].name}
-              total={item[i].tracks.total}
+              image={item.images[0].url}
+              name={item.name}
+              total={item.tracks.total}
               key={i}
             />
           ))}
-        </Grid> */}
+        </Grid>
       </header>
     </div>
   );

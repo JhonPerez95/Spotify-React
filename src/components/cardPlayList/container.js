@@ -1,22 +1,7 @@
 import React from 'react';
 
 import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-
-// Material UI
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-    minWidth: 290,
-    margin: '1em',
-    textAlign: 'center',
-    margin: '2em',
-    padding: '1em',
-  },
-  media: {
-    minHeight: 315,
-  },
-});
+import { useStyles } from './style';
 
 const CardPlayList = ({ image, name, total }) => {
   const classes = useStyles();
@@ -29,7 +14,7 @@ const CardPlayList = ({ image, name, total }) => {
           {name}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          <p> Total Track's: {total} </p>
+          Total Track's: {total}
         </Typography>
       </CardContent>
     </Card>
